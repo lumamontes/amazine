@@ -1,11 +1,680 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import heroImg from '../assets/hero-right-img.png';
+import zinesImg from '../assets/what-is-zines-img.png';
+import girlTreeImg from '../assets/girl-in-tree.png';
+import logoImage from '../assets/Amazine_Logo_Simbolo_Tipografia.png';
+import { Image } from 'astro:assets';
 ---
 
 <Layout>
-	<Welcome />
+	<!-- Header -->
+	<header class="header" id="header">
+		<nav class="nav">
+			<a href="#sobre">Sobre</a>
+			<a href="#inscricao">Inscrição</a>
+			<a href="#organizacao">Participantes</a>
+		</nav>
+	</header>
+
+	<!-- Hero Section -->
+	<section class="hero" id="hero">
+		<div class="hero-left">
+			<div class="hero-logo-container">
+				<Image src={logoImage} alt="AMAZINE" class="hero-logo" />
+				<a href="https://instagram.com/feiraamazine" target="_blank" rel="noopener" class="instagram-link" aria-label="Instagram">
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+						<rect x="2" y="2" width="20" height="20" rx="5"/>
+						<circle cx="12" cy="12" r="4"/>
+						<circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+					</svg>
+				</a>
+			</div>
+
+			<div class="hero-date-banner">
+				<span>6 de março de 2026</span>
+				<span class="separator mobile-hidden">—</span>
+				<span>Biblioteca Elcy Lacerda</span>
+			</div>
+		</div>
+
+		<div class="hero-right">
+			<p class="hero-text">
+				A 1ª Feira de zines de Macapá — AMAZINE objetiva valorizar e fazer circular a produção literária e artística independente de Macapá a partir de fanzines, gênero textual de grande relevância cultural, social e política.
+			</p>
+			<Image src={heroImg} alt="Mão segurando um zine" class="hero-image" />
+		</div>
+	</section>
+
+	<!-- O que são zines -->
+	<section class="zines-section" id="sobre">
+		<div class="zines-container">
+			<div class="zines-image">
+				<Image src={zinesImg} alt="Ilustração de um zine aberto" />
+			</div>
+			<div class="zines-content">
+				<h2>O que são zines?</h2>
+				<p>São publicações independentes, de pouca tiragem, feitas artesanalmente e até digitalmente sobre assuntos de interesses diversos: literatura, arte, música, política, cinema e mais.</p>
+				<p class="zines-cta-text">Conheça no botão a seguir a iniciativa Biblioteca de Zines, acervo digital para zines brasileiras</p>
+				<a href="https://www.biblioteca-de-zines.com.br/" target="_blank" rel="noopener" class="btn-primary">
+					Acessar
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Quote Section -->
+	<section class="quote-section">
+		<div class="quote-left">
+			<h2>Um espaço para divulgar e apreciar a variedade de produções de autorias locais</h2>
+			<p class="quote-location">Macapá — Amazônia — Brasil</p>
+		</div>
+		<div class="quote-right">
+			<Image src={girlTreeImg} alt="Ilustração de uma garota em uma árvore" />
+		</div>
+	</section>
+
+	<!-- Inscrição Section -->
+	<section class="inscricao-section" id="inscricao">
+		<div class="inscricao-container">
+			<span class="section-label">Oficina</span>
+			<h2>Aprenda a fazer seu zine</h2>
+
+			<div class="inscricao-card">
+				<div class="inscricao-header">
+					<span class="inscricao-time">EM BREVE</span>
+					<span class="inscricao-duration">Duração a definir</span>
+				</div>
+				<p>Workshop prático onde você aprenderá técnicas para criação do seu próprio zine, a partir de materiais simples e acessíveis.</p>
+				<a href="#" class="btn-primary btn-block btn-disabled" aria-disabled="true" tabindex="-1">Inscrições em breve</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Organização Section -->
+	<section class="organizacao-section" id="organizacao">
+		<h2>Organização</h2>
+		<div class="organizacao-list">
+			<a href="https://www.instagram.com/luana.g.m/" target="_blank" rel="noopener">Luana Góes</a>
+			<a href="https://www.instagram.com/jenifferyara_/" target="_blank" rel="noopener">Jeniffer Yara</a>
+			<a href="https://www.instagram.com/coletivoventosdonorte/" target="_blank" rel="noopener">Coletivo Ventos do Norte</a>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="footer-container">
+			<div class="footer-brand">
+				<Image src={logoImage} alt="AMAZINE" class="footer-logo" />
+				<p>Feira de Zines de Macapá<br/>Primeira Edição — 2026</p>
+			</div>
+			<div class="footer-info">
+				<p id="highlight">6 de Março de 2026<br/>Biblioteca Elcy Lacerda, Macapá</p>
+			</div>
+			<div class="footer-links">
+				<a href="mailto:feiraamazine@gmail.com">feiraamazine@gmail.com</a>
+				<a href="https://instagram.com/feiraamazine" target="_blank" rel="noopener">@feiraamazine</a>
+			</div>
+		</div>
+	</footer>
 </Layout>
+
+<style>
+	/* =============================================
+	   COLORS
+	   ============================================= */
+	:root {
+		--cream: #FAF6F1;
+		--wine: #5C232A;
+		--wine-dark: #4A1D22;
+		--olive: #4A5A2B;
+		--orange: #E07B3C;
+	}
+
+	/* =============================================
+	   HEADER - Framer-level sticky nav
+	   ============================================= */
+	.header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		padding: 1rem 2rem;
+		background: rgba(250, 246, 241, 0);
+		backdrop-filter: blur(0px);
+		-webkit-backdrop-filter: blur(0px);
+		transition:
+			background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+			backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+			-webkit-backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+			box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+			padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.header.scrolled {
+		background: rgba(250, 246, 241, 0.85);
+		backdrop-filter: blur(12px) saturate(180%);
+		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		box-shadow:
+			0 1px 0 rgba(92, 35, 42, 0.06),
+			0 4px 20px rgba(92, 35, 42, 0.04);
+		padding: 0.875rem 2rem;
+	}
+
+	.header .nav {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.header .nav a {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		color: var(--wine);
+		transition: color 0.2s ease, opacity 0.2s ease;
+		position: relative;
+	}
+
+	.header .nav a::after {
+		content: '';
+		position: absolute;
+		bottom: -4px;
+		left: 0;
+		width: 0;
+		height: 1.5px;
+		background: var(--wine);
+		transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.header .nav a:hover::after {
+		width: 100%;
+	}
+
+	.header .nav a:hover {
+		opacity: 0.8;
+	}
+
+	/* =============================================
+	   HERO SECTION
+	   ============================================= */
+	.hero {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		min-height: 100vh;
+	}
+
+	.hero-left {
+		background: var(--cream);
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		padding-top: 5rem; /* Account for fixed header */
+		position: relative;
+	}
+	.hero-logo {
+		max-width: 80%;
+	}
+	.hero-logo-container {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+	.instagram-link {
+		color: var(--wine);
+		transition: opacity 0.2s;
+	}
+
+	.instagram-link:hover {
+		opacity: 0.7;
+	}
+
+	.hero-date-banner {
+		margin-top: auto;
+		background: var(--wine);
+		color: white;
+		padding: 1rem 1.5rem;
+		font-size: 2rem;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-left: -2rem;
+		margin-right: -2rem;
+		margin-bottom: -2rem;
+		padding-left: 2rem;
+	}
+
+	.hero-date-banner .separator {
+		opacity: 0.5;
+	}
+
+	.hero-right {
+		background: var(--wine);
+		color: white;
+		padding: 2rem;
+		padding-top: 5rem; /* Account for fixed header */
+		display: flex;
+		flex-direction: column;
+	}
+
+	.hero-text {
+		font-size: 1.5rem;
+		line-height: 1.7;
+		color: white;
+		max-width: 360px;
+		margin-bottom: auto;
+	}
+
+	.hero-image {
+		max-width: 80%;
+		margin-top: auto;
+		align-self: center;
+	}
+
+	/* =============================================
+	   ZINES SECTION
+	   ============================================= */
+	.zines-section {
+		background: var(--cream);
+		padding: 6rem 2rem;
+	}
+
+	.zines-container {
+		max-width: 1000px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+
+	.zines-image img {
+		max-width: 100%;
+	}
+
+	.zines-content {
+		text-align: center;
+	}
+
+	.zines-content h2 {
+		font-size: 1.5rem;
+		color: var(--wine);
+		margin-bottom: 1.5rem;
+	}
+
+	.zines-content p {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--wine);
+		margin-bottom: 1rem;
+	}
+
+	.zines-cta-text {
+		font-size: 0.9375rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.875rem 2.5rem;
+		background: var(--orange);
+		color: white;
+		font-family: var(--font-body);
+		font-size: 1rem;
+		font-weight: 600;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background 0.2s, transform 0.2s;
+	}
+
+	.btn-primary:hover {
+		background: #c96a32;
+		transform: translateY(-1px);
+	}
+
+	.btn-block {
+		width: 100%;
+	}
+	.btn-disabled,
+	.btn-disabled:hover,
+	.btn-disabled:focus {
+		background: #cccccc;
+		color: #666666;
+		cursor: not-allowed;
+		transform: none;
+	}
+
+	/* =============================================
+	   QUOTE SECTION
+	   ============================================= */
+	.quote-section {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		min-height: 500px;
+	}
+
+	.quote-left {
+		background: var(--olive);
+		color: white;
+		padding: 4rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.quote-left h2 {
+		font-size: clamp(1.75rem, 3vw, 2.5rem);
+		font-weight: 600;
+		line-height: 1.2;
+		margin-bottom: 2rem;
+	}
+
+	.quote-location {
+		font-size: 1rem;
+		color: rgba(255, 255, 255, 0.8);
+	}
+
+	.quote-right {
+		background: var(--cream);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+
+	.quote-right img {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+
+	/* =============================================
+	   INSCRIÇÃO SECTION
+	   ============================================= */
+	.inscricao-section {
+		background: white;
+		padding: 6rem 2rem;
+	}
+
+	.inscricao-container {
+		max-width: 560px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.section-label {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--orange);
+		margin-bottom: 0.75rem;
+	}
+
+	.inscricao-container h2 {
+		font-size: 2rem;
+		color: var(--wine);
+		margin-bottom: 2rem;
+	}
+
+	.inscricao-card {
+		background: var(--cream);
+		border-radius: 12px;
+		padding: 2rem;
+		text-align: left;
+	}
+
+	.inscricao-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+
+	.inscricao-time {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--wine);
+	}
+
+	.inscricao-duration {
+		font-size: 0.875rem;
+		color: var(--wine);
+		opacity: 0.7;
+	}
+
+	.inscricao-card > p {
+		font-size: 1rem;
+		color: var(--wine);
+		margin-bottom: 1.25rem;
+		line-height: 1.6;
+	}
+
+	.inscricao-tags {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.tag {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		background: rgba(92, 35, 42, 0.1);
+		color: var(--wine);
+		font-size: 0.8125rem;
+		font-weight: 500;
+		border-radius: 4px;
+	}
+
+	/* =============================================
+	   ORGANIZAÇÃO SECTION
+	   ============================================= */
+	.organizacao-section {
+		background: var(--wine);
+		color: white;
+		padding: 4rem 2rem;
+		text-align: center;
+	}
+
+	.organizacao-section h2 {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.organizacao-list {
+		display: flex;
+		justify-content: center;
+		gap: 3rem;
+		flex-wrap: wrap;
+	}
+
+	.organizacao-list a {
+		font-size: 1.125rem;
+		color: white;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-thickness: 1px;
+		opacity: 0.9;
+		transition: opacity 0.2s ease;
+	}
+
+	.organizacao-list a:hover {
+		opacity: 1;
+	}
+
+	/* =============================================
+	   FOOTER
+	   ============================================= */
+	.footer {
+		padding: 4rem 2rem;
+		background: var(--gray-900, #18181b);
+		color: white;
+	}
+
+	.footer-container {
+		max-width: 1120px;
+		margin: 0 auto;
+		display: grid;
+		gap: 2rem;
+	}
+
+	.footer-logo {
+		width: 100px;
+		filter: brightness(0) invert(1);
+		opacity: 0.9;
+		margin-bottom: 1rem;
+	}
+
+	.footer-brand p,
+	.footer-info p {
+		font-size: 0.875rem;
+		color: #a1a1aa;
+		line-height: 1.6;
+	}
+
+	.footer-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.footer-links a {
+		font-size: 0.875rem;
+		color: #a1a1aa;
+		transition: color 0.15s ease;
+	}
+
+	.footer-links a:hover {
+		color: white;
+	}
+
+	/* =============================================
+	   RESPONSIVE
+	   ============================================= */
+	.mobile-hidden {
+		display: none;
+	}
+
+	@media (min-width: 600px) {
+		.mobile-hidden {
+			display: inline;
+		}
+	}
+	@media (max-width: 900px) {
+		.hero {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-left {
+			min-height: 50vh;
+		}
+
+		.hero-right {
+			min-height: 60vh;
+		}
+
+		.hero-date-banner {
+			position: relative;
+			margin-left: -2rem;
+			margin-right: -2rem;
+		}
+
+		.zines-container {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+			text-align: center;
+		}
+
+		.zines-image {
+			order: -1;
+			max-width: 300px;
+			margin: 0 auto;
+		}
+
+		.quote-section {
+			grid-template-columns: 1fr;
+		}
+
+		.quote-left {
+			padding: 3rem 2rem;
+		}
+
+		.quote-right {
+			min-height: 300px;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.footer-container {
+			grid-template-columns: 1fr 1fr 1fr;
+			align-items: start;
+		}
+
+		.footer-links {
+			text-align: right;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.header {
+			padding: 0.875rem 1.25rem;
+		}
+
+		.header.scrolled {
+			padding: 0.75rem 1.25rem;
+		}
+
+		.header .nav {
+			gap: 1.5rem;
+		}
+
+		.header .nav a {
+			font-size: 0.8125rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.header .nav {
+			gap: 1rem;
+		}
+
+		.header .nav a {
+			font-size: 0.75rem;
+		}
+	}
+</style>
+
+<script>
+	const header = document.getElementById('header');
+	let lastScroll = 0;
+	let ticking = false;
+
+	function handleScroll() {
+		const currentScroll = window.scrollY;
+
+		if (currentScroll > 20) {
+			header?.classList.add('scrolled');
+		} else {
+			header?.classList.remove('scrolled');
+		}
+
+		lastScroll = currentScroll;
+		ticking = false;
+	}
+
+	window.addEventListener('scroll', () => {
+		if (!ticking) {
+			window.requestAnimationFrame(handleScroll);
+			ticking = true;
+		}
+	}, { passive: true });
+
+	handleScroll();
+</script>

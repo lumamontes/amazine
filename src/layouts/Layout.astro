@@ -1,22 +1,176 @@
+---
+export interface Props {
+	title?: string;
+	description?: string;
+}
+
+const title = Astro.props.title ?? "AMAZINE — Feira de Zines de Macapá";
+const description = Astro.props.description ?? "A primeira feira de zines de Macapá. 6 de março de 2026 na Biblioteca Elcy Lacerda. Feira, oficina e roda de conversa. Evento gratuito!";
+const ogImage = "/og-image.jpeg";
+const siteUrl = "https://amazine.netlify.app";
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={siteUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={`${siteUrl}${ogImage}`} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:site_name" content="AMAZINE" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+		<!-- Fonts: Satoshi + Clash Display -->
+		<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
-	body {
+<style is:global>
+	:root {
+		/* Refined palette */
+		--black: #0a0a0a;
+		--white: #ffffff;
+		--gray-50: #fafafa;
+		--gray-100: #f4f4f5;
+		--gray-200: #e4e4e7;
+		--gray-400: #a1a1aa;
+		--gray-500: #71717a;
+		--gray-600: #52525b;
+		--gray-900: #18181b;
+
+		/* Accent - vibrant coral red */
+		--accent: #ff4d4d;
+		--accent-dark: #e63939;
+
+		/* Secondary - deep teal */
+		--secondary: #0d9488;
+		--secondary-dark: #0a7a70;
+
+		/* Typography */
+		--font-display: 'Clash Display', system-ui, sans-serif;
+		--font-body: 'Satoshi', system-ui, sans-serif;
+
+		/* Spacing */
+		--space-xs: 0.5rem;
+		--space-sm: 1rem;
+		--space-md: 1.5rem;
+		--space-lg: 2rem;
+		--space-xl: 3rem;
+		--space-2xl: 5rem;
+		--space-3xl: 8rem;
+	}
+
+	* {
+		box-sizing: border-box;
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+	}
+
+	html {
+		font-family: var(--font-body);
+		font-size: 16px;
+		line-height: 1.6;
+		color: var(--gray-900);
+		background-color: var(--white);
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		min-height: 100vh;
+	}
+
+	::selection {
+		background-color: var(--accent);
+		color: var(--white);
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-display);
+		font-weight: 600;
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+
+	p {
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		color: var(--gray-600);
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	/* Minimal animation */
+	.fade-in {
+		opacity: 0;
+		transform: translateY(16px);
+		transition: opacity 0.6s ease, transform 0.6s ease;
+	}
+
+	.fade-in.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 </style>
+
+<script>
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+				}
+			});
+		},
+		{ threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+	);
+
+	document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
