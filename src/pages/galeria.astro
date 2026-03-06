@@ -1,0 +1,558 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getGalleryImages } from '../data/gallery';
+import logoImage from '../assets/Amazine_Logo_Simbolo_Tipografia.png';
+import { Image } from 'astro:assets';
+
+const galleryImages = await getGalleryImages();
+---
+
+<Layout>
+	<!-- Header -->
+	<header class="header" id="header">
+		<nav class="nav">
+			<a href="/">Início</a>
+			<a href="/#sobre">Sobre</a>
+			<a href="/galeria" class="active">Galeria</a>
+		</nav>
+	</header>
+
+	<!-- Gallery Hero -->
+	<section class="gallery-hero">
+		<span class="section-label">Registros</span>
+		<h1>Galeria de Fotos</h1>
+		<p>Momentos da 1ª Feira de Zines de Macapá</p>
+	</section>
+
+	<!-- Gallery Grid -->
+	<section class="gallery-section">
+		{galleryImages.length > 0 ? (
+			<div class="gallery-grid">
+				{galleryImages.map((image, index) => (
+					<button
+						class="gallery-item"
+						data-index={index}
+						data-url={image.url}
+						aria-label={image.alt || `Foto ${index + 1} da feira AMAZINE`}
+					>
+						<img
+							src={image.url}
+							alt={image.alt || `Foto ${index + 1} da feira AMAZINE`}
+							loading="lazy"
+						/>
+						<div class="gallery-overlay">
+							<span>Ver foto</span>
+						</div>
+					</button>
+				))}
+			</div>
+		) : (
+			<div class="gallery-empty">
+				<p>As fotos da feira serão publicadas em breve.</p>
+				<a href="/" class="btn-primary">Voltar ao início</a>
+			</div>
+		)}
+	</section>
+
+	<!-- Lightbox -->
+	<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizador de fotos">
+		<button class="lightbox-close" id="lightbox-close" aria-label="Fechar">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<line x1="18" y1="6" x2="6" y2="18"/>
+				<line x1="6" y1="6" x2="18" y2="18"/>
+			</svg>
+		</button>
+
+		<button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Foto anterior">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<polyline points="15 18 9 12 15 6"/>
+			</svg>
+		</button>
+
+		<div class="lightbox-content">
+			<img id="lightbox-img" src="" alt="" />
+		</div>
+
+		<button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Próxima foto">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<polyline points="9 18 15 12 9 6"/>
+			</svg>
+		</button>
+
+		<div class="lightbox-counter" id="lightbox-counter"></div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="footer-container">
+			<div class="footer-brand">
+				<Image src={logoImage} alt="AMAZINE" class="footer-logo" />
+				<p>Feira de Zines de Macapá<br/>Primeira Edição — 2026</p>
+			</div>
+			<div class="footer-info">
+				<p id="highlight">6 de Março de 2026<br/>Biblioteca Elcy Lacerda, Macapá</p>
+			</div>
+			<div class="footer-links">
+				<a href="mailto:feiraamazine@gmail.com">feiraamazine@gmail.com</a>
+				<a href="https://instagram.com/feiraamazine" target="_blank" rel="noopener">@feiraamazine</a>
+			</div>
+		</div>
+	</footer>
+</Layout>
+
+<style>
+	:root {
+		--cream: #FAF6F1;
+		--wine: #5C232A;
+		--wine-dark: #4A1D22;
+		--olive: #4A5A2B;
+		--orange: #E07B3C;
+	}
+
+	/* =============================================
+	   HEADER
+	   ============================================= */
+	.header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		padding: 1rem 2rem;
+		background: rgba(250, 246, 241, 0.85);
+		backdrop-filter: blur(12px) saturate(180%);
+		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		box-shadow:
+			0 1px 0 rgba(92, 35, 42, 0.06),
+			0 4px 20px rgba(92, 35, 42, 0.04);
+	}
+
+	.header .nav {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.header .nav a {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		color: var(--wine);
+		transition: color 0.2s ease, opacity 0.2s ease;
+		position: relative;
+	}
+
+	.header .nav a::after {
+		content: '';
+		position: absolute;
+		bottom: -4px;
+		left: 0;
+		width: 0;
+		height: 1.5px;
+		background: var(--wine);
+		transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.header .nav a:hover::after,
+	.header .nav a.active::after {
+		width: 100%;
+	}
+
+	.header .nav a:hover {
+		opacity: 0.8;
+	}
+
+	/* =============================================
+	   GALLERY HERO
+	   ============================================= */
+	.gallery-hero {
+		background: var(--wine);
+		color: white;
+		text-align: center;
+		padding: 8rem 2rem 4rem;
+	}
+
+	.gallery-hero .section-label {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--orange);
+		margin-bottom: 0.75rem;
+	}
+
+	.gallery-hero h1 {
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	.gallery-hero p {
+		font-size: 1.125rem;
+		opacity: 0.8;
+	}
+
+	/* =============================================
+	   GALLERY GRID
+	   ============================================= */
+	.gallery-section {
+		background: var(--cream);
+		padding: 4rem 2rem;
+		min-height: 40vh;
+	}
+
+	.gallery-grid {
+		max-width: 1120px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.gallery-item {
+		position: relative;
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		border-radius: 8px;
+		cursor: pointer;
+		border: none;
+		padding: 0;
+		background: var(--wine-dark);
+		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.gallery-item:hover {
+		transform: scale(1.02);
+	}
+
+	.gallery-item img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.gallery-item:hover img {
+		transform: scale(1.05);
+	}
+
+	.gallery-overlay {
+		position: absolute;
+		inset: 0;
+		background: rgba(92, 35, 42, 0);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background 0.3s ease;
+	}
+
+	.gallery-overlay span {
+		color: white;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		opacity: 0;
+		transform: translateY(8px);
+		transition: opacity 0.3s ease, transform 0.3s ease;
+	}
+
+	.gallery-item:hover .gallery-overlay {
+		background: rgba(92, 35, 42, 0.35);
+	}
+
+	.gallery-item:hover .gallery-overlay span {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* =============================================
+	   GALLERY EMPTY STATE
+	   ============================================= */
+	.gallery-empty {
+		text-align: center;
+		padding: 4rem 2rem;
+		max-width: 480px;
+		margin: 0 auto;
+	}
+
+	.gallery-empty p {
+		font-size: 1.125rem;
+		color: var(--wine);
+		margin-bottom: 2rem;
+		opacity: 0.7;
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.875rem 2.5rem;
+		background: var(--orange);
+		color: white;
+		font-family: var(--font-body);
+		font-size: 1rem;
+		font-weight: 600;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background 0.2s, transform 0.2s;
+	}
+
+	.btn-primary:hover {
+		background: #c96a32;
+		transform: translateY(-1px);
+	}
+
+	/* =============================================
+	   LIGHTBOX
+	   ============================================= */
+	.lightbox {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		background: rgba(0, 0, 0, 0.92);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+	}
+
+	.lightbox.open {
+		opacity: 1;
+		pointer-events: all;
+	}
+
+	.lightbox-content {
+		max-width: 90vw;
+		max-height: 85vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.lightbox-content img {
+		max-width: 100%;
+		max-height: 85vh;
+		object-fit: contain;
+		border-radius: 4px;
+	}
+
+	.lightbox-close {
+		position: absolute;
+		top: 1.25rem;
+		right: 1.25rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: none;
+		color: white;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background 0.2s;
+	}
+
+	.lightbox-close:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.lightbox-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(255, 255, 255, 0.1);
+		border: none;
+		color: white;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background 0.2s;
+	}
+
+	.lightbox-nav:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.lightbox-prev {
+		left: 1.25rem;
+	}
+
+	.lightbox-next {
+		right: 1.25rem;
+	}
+
+	.lightbox-counter {
+		position: absolute;
+		bottom: 1.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(0, 0, 0, 0.5);
+		color: white;
+		padding: 0.5rem 1.25rem;
+		border-radius: 999px;
+		font-size: 0.875rem;
+	}
+
+	/* =============================================
+	   FOOTER
+	   ============================================= */
+	.footer {
+		padding: 4rem 2rem;
+		background: var(--gray-900, #18181b);
+		color: white;
+	}
+
+	.footer-container {
+		max-width: 1120px;
+		margin: 0 auto;
+		display: grid;
+		gap: 2rem;
+	}
+
+	.footer-logo {
+		width: 100px;
+		filter: brightness(0) invert(1);
+		opacity: 0.9;
+		margin-bottom: 1rem;
+	}
+
+	.footer-brand p,
+	.footer-info p {
+		font-size: 0.875rem;
+		color: #a1a1aa;
+		line-height: 1.6;
+	}
+
+	.footer-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.footer-links a {
+		font-size: 0.875rem;
+		color: #a1a1aa;
+		transition: color 0.15s ease;
+	}
+
+	.footer-links a:hover {
+		color: white;
+	}
+
+	/* =============================================
+	   RESPONSIVE
+	   ============================================= */
+	@media (min-width: 640px) {
+		.footer-container {
+			grid-template-columns: 1fr 1fr 1fr;
+			align-items: start;
+		}
+
+		.footer-links {
+			text-align: right;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.header {
+			padding: 0.875rem 1.25rem;
+		}
+
+		.header .nav {
+			gap: 1.5rem;
+		}
+
+		.header .nav a {
+			font-size: 0.8125rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.header .nav {
+			gap: 1rem;
+		}
+
+		.header .nav a {
+			font-size: 0.75rem;
+		}
+
+		.lightbox-nav {
+			width: 40px;
+			height: 40px;
+		}
+
+		.lightbox-prev {
+			left: 0.5rem;
+		}
+
+		.lightbox-next {
+			right: 0.5rem;
+		}
+	}
+</style>
+
+<script>
+	const lightbox = document.getElementById('lightbox')!;
+	const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+	const lightboxCounter = document.getElementById('lightbox-counter')!;
+	const items = document.querySelectorAll<HTMLButtonElement>('.gallery-item');
+	let currentIndex = 0;
+
+	function openLightbox(index: number) {
+		currentIndex = index;
+		updateLightbox();
+		lightbox.classList.add('open');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeLightbox() {
+		lightbox.classList.remove('open');
+		document.body.style.overflow = '';
+	}
+
+	function updateLightbox() {
+		const item = items[currentIndex];
+		if (!item) return;
+		const url = item.dataset.url || '';
+		const alt = item.getAttribute('aria-label') || '';
+		lightboxImg.src = url;
+		lightboxImg.alt = alt;
+		lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+	}
+
+	function goNext() {
+		currentIndex = (currentIndex + 1) % items.length;
+		updateLightbox();
+	}
+
+	function goPrev() {
+		currentIndex = (currentIndex - 1 + items.length) % items.length;
+		updateLightbox();
+	}
+
+	items.forEach((item, index) => {
+		item.addEventListener('click', () => openLightbox(index));
+	});
+
+	document.getElementById('lightbox-close')!.addEventListener('click', closeLightbox);
+	document.getElementById('lightbox-prev')!.addEventListener('click', goPrev);
+	document.getElementById('lightbox-next')!.addEventListener('click', goNext);
+
+	lightbox.addEventListener('click', (e) => {
+		if (e.target === lightbox) closeLightbox();
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (!lightbox.classList.contains('open')) return;
+		if (e.key === 'Escape') closeLightbox();
+		if (e.key === 'ArrowRight') goNext();
+		if (e.key === 'ArrowLeft') goPrev();
+	});
+</script>
