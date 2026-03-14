@@ -5,6 +5,8 @@ import logoImage from '../assets/Amazine_Logo_Simbolo_Tipografia.png';
 import { Image } from 'astro:assets';
 
 const galleryImages = await getGalleryImages();
+const imagesPerPage = 12;
+const totalPages = Math.ceil(galleryImages.length / imagesPerPage);
 ---
 
 <Layout>
@@ -21,33 +23,59 @@ const galleryImages = await getGalleryImages();
 	<section class="gallery-hero">
 		<span class="section-label">Registros</span>
 		<h1>Galeria de Fotos</h1>
-		<p>Momentos da 1ª Feira de Zines de Macapá</p>
+		<p class="gallery-description">Momentos da 1ª Feira de Zines de Macapá</p>
 	</section>
 
 	<!-- Gallery Grid -->
 	<section class="gallery-section">
 		{galleryImages.length > 0 ? (
-			<div class="gallery-grid">
-				{galleryImages.map((image, index) => (
-					<button
-						class="gallery-item"
-						data-index={index}
-						data-url={image.url}
-						aria-label={image.alt || `Foto ${index + 1} da feira AMAZINE`}
-					>
-						<Image
-							src={image.url}
-							alt={image.alt || `Foto ${index + 1} da feira AMAZINE`}
-							loading="lazy"
-							width={200}
-							height={200}
-						/>
-						<div class="gallery-overlay">
-							<span>Ver foto</span>
+			<>
+				<div class="gallery-grid" id="gallery-grid">
+					{galleryImages.map((image, index) => (
+						<button
+							class="gallery-item"
+							data-index={index}
+							data-url={image.url}
+							data-page={Math.floor(index / imagesPerPage) + 1}
+							aria-label={image.alt || `Foto ${index + 1} da feira AMAZINE`}
+							style={Math.floor(index / imagesPerPage) === 0 ? "display: block;" : "display: none;"}
+						>
+							<Image
+								src={image.url}
+								alt={image.alt || `Foto ${index + 1} da feira AMAZINE`}
+								loading="lazy"
+								width={200}
+								height={200}
+							/>
+							<div class="gallery-overlay">
+								<span>Ver foto</span>
+							</div>
+						</button>
+					))}
+				</div>
+				
+				{totalPages > 1 && (
+					<div class="pagination" id="pagination">
+						<button class="pagination-btn pagination-prev" id="prev-btn" disabled>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<polyline points="15 18 9 12 15 6"/>
+							</svg>
+							Anterior
+						</button>
+						
+						<div class="pagination-info" id="pagination-info">
+							Página <span id="current-page">1</span> de <span id="total-pages">{totalPages}</span>
 						</div>
-					</button>
-				))}
-			</div>
+						
+						<button class="pagination-btn pagination-next" id="next-btn">
+							Próxima
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<polyline points="9 18 15 12 9 6"/>
+							</svg>
+						</button>
+					</div>
+				)}
+			</>
 		) : (
 			<div class="gallery-empty">
 				<p>As fotos da feira serão publicadas em breve.</p>
@@ -185,6 +213,11 @@ const galleryImages = await getGalleryImages();
 		margin-bottom: 0.75rem;
 	}
 
+	.gallery-description{
+		font-size: 1.125rem;
+		opacity: 0.8;
+		color: white;
+	}
 	.gallery-hero p {
 		font-size: 1.125rem;
 		opacity: 0.8;
@@ -217,11 +250,12 @@ const galleryImages = await getGalleryImages();
 		border: none;
 		padding: 0;
 		background: var(--wine-dark);
-		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		transition: transform 0.2s ease-out;
+		will-change: transform;
 	}
 
 	.gallery-item:hover {
-		transform: scale(1.02);
+		transform: translateY(-2px);
 	}
 
 	.gallery-item img {
@@ -229,11 +263,7 @@ const galleryImages = await getGalleryImages();
 		height: 100%;
 		object-fit: cover;
 		display: block;
-		transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-
-	.gallery-item:hover img {
-		transform: scale(1.05);
+		transition: none;
 	}
 
 	.gallery-overlay {
@@ -243,7 +273,8 @@ const galleryImages = await getGalleryImages();
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: background 0.3s ease;
+		transition: background 0.2s ease;
+		will-change: background;
 	}
 
 	.gallery-overlay span {
@@ -251,8 +282,8 @@ const galleryImages = await getGalleryImages();
 		font-size: 0.9375rem;
 		font-weight: 500;
 		opacity: 0;
-		transform: translateY(8px);
-		transition: opacity 0.3s ease, transform 0.3s ease;
+		transition: opacity 0.2s ease;
+		will-change: opacity;
 	}
 
 	.gallery-item:hover .gallery-overlay {
@@ -261,7 +292,6 @@ const galleryImages = await getGalleryImages();
 
 	.gallery-item:hover .gallery-overlay span {
 		opacity: 1;
-		transform: translateY(0);
 	}
 
 	/* =============================================
@@ -300,6 +330,49 @@ const galleryImages = await getGalleryImages();
 	.btn-primary:hover {
 		background: #c96a32;
 		transform: translateY(-1px);
+	}
+
+	/* =============================================
+	   PAGINATION
+	   ============================================= */
+	.pagination {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+		margin-top: 3rem;
+		padding: 0 2rem;
+	}
+
+	.pagination-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: var(--wine);
+		color: white;
+		border: none;
+		border-radius: 6px;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background 0.2s, opacity 0.2s;
+	}
+
+	.pagination-btn:hover:not(:disabled) {
+		background: var(--wine-dark);
+	}
+
+	.pagination-btn:disabled {
+		background: #cccccc;
+		color: #666666;
+		cursor: not-allowed;
+	}
+
+	.pagination-info {
+		font-size: 0.9375rem;
+		color: var(--wine);
+		font-weight: 500;
 	}
 
 	/* =============================================
@@ -495,6 +568,20 @@ const galleryImages = await getGalleryImages();
 		.lightbox-next {
 			right: 0.5rem;
 		}
+
+		.pagination {
+			gap: 1rem;
+			flex-direction: column;
+		}
+
+		.pagination-btn {
+			padding: 0.625rem 1.25rem;
+			font-size: 0.875rem;
+		}
+
+		.pagination-info {
+			font-size: 0.875rem;
+		}
 	}
 </style>
 
@@ -503,7 +590,14 @@ const galleryImages = await getGalleryImages();
 	const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
 	const lightboxCounter = document.getElementById('lightbox-counter')!;
 	const items = document.querySelectorAll<HTMLButtonElement>('.gallery-item');
+	const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
+	const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
+	const currentPageSpan = document.getElementById('current-page')!;
+	
 	let currentIndex = 0;
+	let currentPage = 1;
+	const imagesPerPage = 12;
+	const totalPages = Math.ceil(items.length / imagesPerPage);
 
 	function openLightbox(index: number) {
 		currentIndex = index;
@@ -537,6 +631,37 @@ const galleryImages = await getGalleryImages();
 		updateLightbox();
 	}
 
+	function showPage(page: number) {
+		currentPage = page;
+		currentPageSpan.textContent = page.toString();
+		
+		items.forEach((item, index) => {
+			const itemPage = Math.floor(index / imagesPerPage) + 1;
+			if (itemPage === page) {
+				item.style.display = 'block';
+			} else {
+				item.style.display = 'none';
+			}
+		});
+		
+		if (prevBtn && nextBtn) {
+			prevBtn.disabled = page === 1;
+			nextBtn.disabled = page === totalPages;
+		}
+	}
+
+	function goToNextPage() {
+		if (currentPage < totalPages) {
+			showPage(currentPage + 1);
+		}
+	}
+
+	function goToPrevPage() {
+		if (currentPage > 1) {
+			showPage(currentPage - 1);
+		}
+	}
+
 	items.forEach((item, index) => {
 		item.addEventListener('click', () => openLightbox(index));
 	});
@@ -544,6 +669,11 @@ const galleryImages = await getGalleryImages();
 	document.getElementById('lightbox-close')!.addEventListener('click', closeLightbox);
 	document.getElementById('lightbox-prev')!.addEventListener('click', goPrev);
 	document.getElementById('lightbox-next')!.addEventListener('click', goNext);
+
+	if (prevBtn && nextBtn) {
+		prevBtn.addEventListener('click', goToPrevPage);
+		nextBtn.addEventListener('click', goToNextPage);
+	}
 
 	lightbox.addEventListener('click', (e) => {
 		if (e.target === lightbox) closeLightbox();

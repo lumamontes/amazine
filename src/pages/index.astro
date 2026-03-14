@@ -4,6 +4,8 @@ import heroImg from '../assets/hero-right-img.png';
 import zinesImg from '../assets/what-is-zines-img.png';
 import girlTreeImg from '../assets/girl-in-tree.png';
 import logoImage from '../assets/Amazine_Logo_Simbolo_Tipografia.png';
+import gabitoImg from '../assets/gabito.png';
+import flipbookPdf from '../assets/AMAZINE_flipbook.pdf';
 import { Image } from 'astro:assets';
 ---
 
@@ -75,19 +77,86 @@ import { Image } from 'astro:assets';
 		</div>
 	</section>
 
-	<!-- Inscrição Section -->
-	<section class="inscricao-section" id="inscricao">
-		<div class="inscricao-container">
-			<span class="section-label">Oficina</span>
-			<h2>Aprenda a fazer seu zine</h2>
-
-			<div class="inscricao-card">
-				<div class="inscricao-header">
-					<span class="inscricao-time">EM BREVE</span>
-					<span class="inscricao-duration">Duração a definir</span>
+	<!-- PDF Flipbook Section -->
+	<section class="flipbook-section">
+		<div class="flipbook-container">
+			<span class="section-label">Memórias Digitais</span>
+			<h2>Primeira Edição da Feira AMAZINE</h2>
+			<p>Reviva os momentos especiais da nossa primeira edição através deste catálogo digital interativo</p>
+			
+			<div class="flipbook-card">
+				<div class="flipbook-preview">
+					<div class="flipbook-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+							<polyline points="14,2 14,8 20,8"/>
+							<line x1="16" y1="13" x2="8" y2="13"/>
+							<line x1="16" y1="17" x2="8" y2="17"/>
+							<polyline points="10,9 9,9 8,9"/>
+						</svg>
+					</div>
+					<h3>Catálogo da 1ª Edição</h3>
+					<p>Explore o catálogo interativo com fotos, depoimentos e registros da primeira feira de zines de Macapá</p>
 				</div>
-				<p>Workshop prático onde você aprenderá técnicas para criação do seu próprio zine, a partir de materiais simples e acessíveis.</p>
-				<a href="#" class="btn-primary btn-block btn-disabled" aria-disabled="true" tabindex="-1">Inscrições em breve</a>
+				
+				<div class="flipbook-actions">
+					<a href={flipbookPdf} target="_blank" rel="noopener" class="btn-primary btn-flipbook">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<polyline points="6 9 6 2 18 2 18 9"/>
+							<path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+							<rect x="6" y="14" width="12" height="8" rx="1"/>
+						</svg>
+						Visualizar Catálogo
+					</a>
+					<span class="flipbook-status">Disponível para download</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Oficina Section -->
+	<section class="workshop-section" id="inscricao">
+		<div class="workshop-hero">
+			<span class="section-label">Oficina</span>
+			<h2>Workshop de Criação de Zines</h2>
+			<p class="workshop-subtitle">Uma experiência transformadora de criação artística e literária</p>
+		</div>
+		
+		<div class="workshop-main">
+			<div class="workshop-poster-large">
+				<Image src={gabitoImg} alt="Poster da Oficina de Zines com Gabito Alencar" class="poster-image-large" />
+			</div>
+			
+			<div class="workshop-content-large">
+				<div class="workshop-status">
+					<span class="workshop-badge">REALIZADA</span>
+					<span class="workshop-date">6 de março • 9h-11h</span>
+				</div>
+				
+				<div class="workshop-description">
+					<h3>Sobre o Workshop</h3>
+					<p>Workshop prático onde os participantes aprenderam técnicas para criação de zines, usando materiais simples e acessíveis. Durante duas horas intensivas, exploramos desde conceitos básicos até técnicas avançadas de produção artesanal.</p>
+					<p>A oficina abordou temas como narrativa visual, técnicas de colagem, impressão artesanal e distribuição independente, proporcionando uma experiência completa no universo dos zines.</p>
+				</div>
+				
+				<div class="workshop-facilitator-large">
+					<div class="facilitator-info">
+						<h4>Oficineiro</h4>
+						<h5>Gabito Alencar</h5>
+					</div>
+				</div>
+				
+				<div class="workshop-actions">
+					<a href="/galeria" class="btn-primary btn-large">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+							<circle cx="9" cy="9" r="2"/>
+							<path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+						</svg>
+						Ver fotos da oficina
+					</a>
+					<span class="workshop-note">Confira os momentos especiais registrados durante a oficina</span>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -201,7 +270,11 @@ import { Image } from 'astro:assets';
 	.hero {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		min-height: 100vh;
+		min-height: 500px;
+		margin: 6rem 2rem 2rem;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 8px 32px rgba(92, 35, 42, 0.15);
 	}
 
 	.hero-left {
@@ -209,7 +282,6 @@ import { Image } from 'astro:assets';
 		display: flex;
 		flex-direction: column;
 		padding: 2rem;
-		padding-top: 5rem; /* Account for fixed header */
 		position: relative;
 	}
 	.hero-logo {
@@ -254,7 +326,6 @@ import { Image } from 'astro:assets';
 		background: var(--wine);
 		color: white;
 		padding: 2rem;
-		padding-top: 5rem; /* Account for fixed header */
 		display: flex;
 		flex-direction: column;
 	}
@@ -394,20 +465,20 @@ import { Image } from 'astro:assets';
 	}
 
 	/* =============================================
-	   INSCRIÇÃO SECTION
+	   FLIPBOOK SECTION
 	   ============================================= */
-	.inscricao-section {
+	.flipbook-section {
 		background: white;
 		padding: 6rem 2rem;
 	}
 
-	.inscricao-container {
-		max-width: 560px;
+	.flipbook-container {
+		max-width: 800px;
 		margin: 0 auto;
 		text-align: center;
 	}
 
-	.section-label {
+	.flipbook-container .section-label {
 		display: block;
 		font-size: 0.75rem;
 		font-weight: 700;
@@ -417,61 +488,244 @@ import { Image } from 'astro:assets';
 		margin-bottom: 0.75rem;
 	}
 
-	.inscricao-container h2 {
+	.flipbook-container h2 {
 		font-size: 2rem;
 		color: var(--wine);
-		margin-bottom: 2rem;
-	}
-
-	.inscricao-card {
-		background: var(--cream);
-		border-radius: 12px;
-		padding: 2rem;
-		text-align: left;
-	}
-
-	.inscricao-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		margin-bottom: 1rem;
 	}
 
-	.inscricao-time {
-		font-family: var(--font-display);
+	.flipbook-container > p {
+		font-size: 1.125rem;
+		color: var(--wine);
+		opacity: 0.8;
+		margin-bottom: 3rem;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.flipbook-card {
+		background: var(--cream);
+		border-radius: 16px;
+		padding: 3rem 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		box-shadow: 0 4px 20px rgba(92, 35, 42, 0.08);
+	}
+
+	.flipbook-preview {
+		text-align: center;
+	}
+
+	.flipbook-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 80px;
+		height: 80px;
+		background: var(--wine);
+		color: white;
+		border-radius: 50%;
+		margin-bottom: 1.5rem;
+	}
+
+	.flipbook-preview h3 {
 		font-size: 1.5rem;
-		font-weight: 600;
 		color: var(--wine);
+		margin-bottom: 1rem;
 	}
 
-	.inscricao-duration {
-		font-size: 0.875rem;
-		color: var(--wine);
-		opacity: 0.7;
-	}
-
-	.inscricao-card > p {
+	.flipbook-preview p {
 		font-size: 1rem;
 		color: var(--wine);
-		margin-bottom: 1.25rem;
 		line-height: 1.6;
+		max-width: 400px;
 	}
 
-	.inscricao-tags {
+	.flipbook-actions {
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.btn-flipbook {
+		display: flex;
+		align-items: center;
 		gap: 0.5rem;
-		margin-bottom: 1.5rem;
+	}
+
+	.flipbook-status {
+		font-size: 0.875rem;
+		color: var(--wine);
+		opacity: 0.6;
+		font-style: italic;
+	}
+
+	/* =============================================
+	   WORKSHOP SECTION
+	   ============================================= */
+	.workshop-section {
+		background: var(--cream);
+		padding: 6rem 0;
+	}
+
+	.workshop-hero {
+		text-align: center;
+		padding: 0 2rem 4rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.workshop-hero .section-label {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--orange);
+		margin-bottom: 0.75rem;
+	}
+
+	.workshop-hero h2 {
+		font-size: clamp(2rem, 4vw, 3rem);
+		color: var(--wine);
+		margin-bottom: 1rem;
+		font-weight: 600;
+	}
+
+	.workshop-subtitle {
+		font-size: 1.25rem;
+		color: var(--wine);
+		opacity: 0.8;
+		font-weight: 400;
+	}
+
+	.workshop-main {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+		display: grid;
+		grid-template-columns: 400px 1fr;
+		gap: 4rem;
+		align-items: start;
+	}
+
+	.workshop-poster-large {
+		position: sticky;
+		top: 2rem;
+	}
+
+	.poster-image-large {
+		width: 100%;
+		height: auto;
+		border-radius: 16px;
+		box-shadow: 0 8px 32px rgba(92, 35, 42, 0.2);
+	}
+
+	.workshop-content-large {
+		background: white;
+		border-radius: 20px;
+		padding: 3rem;
+		box-shadow: 0 4px 24px rgba(92, 35, 42, 0.08);
+	}
+
+	.workshop-status {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2rem;
 		flex-wrap: wrap;
 	}
 
-	.tag {
-		display: inline-block;
-		padding: 0.25rem 0.75rem;
-		background: rgba(92, 35, 42, 0.1);
+	.workshop-badge {
+		background: var(--olive);
+		color: white;
+		font-size: 0.875rem;
+		font-weight: 700;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.workshop-date {
+		font-size: 1rem;
 		color: var(--wine);
-		font-size: 0.8125rem;
 		font-weight: 500;
-		border-radius: 4px;
+	}
+
+	.workshop-description h3 {
+		font-size: 1.5rem;
+		color: var(--wine);
+		margin-bottom: 1.5rem;
+		font-weight: 600;
+	}
+
+	.workshop-description p {
+		font-size: 1rem;
+		color: var(--wine);
+		line-height: 1.7;
+		margin-bottom: 1rem;
+	}
+
+	.workshop-description p:last-child {
+		margin-bottom: 2rem;
+	}
+
+	.workshop-facilitator-large {
+		background: rgba(74, 90, 43, 0.03);
+		border-left: 4px solid var(--olive);
+		border-radius: 8px;
+		padding: 2rem;
+		margin: 2rem 0;
+	}
+
+	.facilitator-info h4 {
+		font-size: 0.875rem;
+		color: var(--olive);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+	}
+
+	.facilitator-info h5 {
+		font-size: 1.25rem;
+		color: var(--wine);
+		margin-bottom: 0.75rem;
+		font-weight: 600;
+	}
+
+	.facilitator-info p {
+		font-size: 0.9375rem;
+		color: var(--wine);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.workshop-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.btn-large {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem 2rem;
+		font-size: 1.0625rem;
+		font-weight: 600;
+	}
+
+	.workshop-note {
+		font-size: 0.875rem;
+		color: var(--wine);
+		opacity: 0.7;
+		font-style: italic;
 	}
 
 	/* =============================================
@@ -571,14 +825,16 @@ import { Image } from 'astro:assets';
 	@media (max-width: 900px) {
 		.hero {
 			grid-template-columns: 1fr;
+			margin: 6rem 1rem 2rem;
+			min-height: auto;
 		}
 
 		.hero-left {
-			min-height: 50vh;
+			min-height: 40vh;
 		}
 
 		.hero-right {
-			min-height: 60vh;
+			min-height: 50vh;
 		}
 
 		.hero-date-banner {
@@ -609,6 +865,70 @@ import { Image } from 'astro:assets';
 
 		.quote-right {
 			min-height: 300px;
+		}
+
+		.flipbook-section {
+			padding: 4rem 2rem;
+		}
+
+		.flipbook-card {
+			padding: 2rem 1.5rem;
+		}
+
+		.flipbook-icon {
+			width: 60px;
+			height: 60px;
+		}
+
+		.flipbook-icon svg {
+			width: 32px;
+			height: 32px;
+		}
+
+		.flipbook-container h2 {
+			font-size: 1.75rem;
+		}
+
+		.workshop-section {
+			padding: 4rem 0;
+		}
+
+		.workshop-hero {
+			padding: 0 2rem 3rem;
+		}
+
+		.workshop-main {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+			padding: 0 1rem;
+		}
+
+		.workshop-poster-large {
+			position: static;
+			max-width: 300px;
+			margin: 0 auto;
+		}
+
+		.workshop-content-large {
+			padding: 2rem 1.5rem;
+			border-radius: 16px;
+		}
+
+		.workshop-status {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.75rem;
+		}
+
+		.workshop-facilitator-large {
+			padding: 1.5rem;
+			margin: 1.5rem 0;
+		}
+
+		.btn-large {
+			padding: 0.875rem 1.75rem;
+			font-size: 1rem;
+			justify-content: center;
 		}
 	}
 
