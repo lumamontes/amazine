@@ -35,10 +35,12 @@ const galleryImages = await getGalleryImages();
 						data-url={image.url}
 						aria-label={image.alt || `Foto ${index + 1} da feira AMAZINE`}
 					>
-						<img
+						<Image
 							src={image.url}
 							alt={image.alt || `Foto ${index + 1} da feira AMAZINE`}
 							loading="lazy"
+							width={200}
+							height={200}
 						/>
 						<div class="gallery-overlay">
 							<span>Ver foto</span>
